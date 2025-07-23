@@ -14,7 +14,10 @@
     "format": "prettier --write \"**/*.{ts,js,json,md,yaml,yml}\"",
     "format:check": "prettier --check \"**/*.{ts,js,json,md,yaml,yml}\"",
     "code:check": "yarn lint && yarn format:check && yarn test",
-    "code:fix": "yarn lint:fix && yarn format"
+    "code:fix": "yarn lint:fix && yarn format",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write . --fix"
   },
   "author": "",
   "license": "MIT",
