@@ -5,7 +5,9 @@ This directory contains comprehensive tests for the Foodie API.
 ## Test Files
 
 ### 1. `auth.test.ts` - Authentication Middleware Tests
+
 Tests the JWT authentication middleware functionality:
+
 - ✅ Valid token acceptance
 - ❌ Missing token handling (401)
 - ❌ Invalid token handling (403)
@@ -14,9 +16,11 @@ Tests the JWT authentication middleware functionality:
 **Coverage**: 100% for authentication middleware
 
 ### 2. `users.test.ts` - User API Endpoint Tests
+
 Tests all user-related API endpoints with full authentication coverage:
 
 #### Registration (`POST /users`)
+
 - ✅ Valid user registration
 - ❌ Missing required fields validation
 - ❌ Invalid email format validation
@@ -25,6 +29,7 @@ Tests all user-related API endpoints with full authentication coverage:
 - ❌ Phone too short validation
 
 #### Login (`POST /users/login`)
+
 - ✅ Valid login with credentials
 - ❌ Missing email validation
 - ❌ Missing password validation
@@ -32,6 +37,7 @@ Tests all user-related API endpoints with full authentication coverage:
 - ❌ Password too short validation
 
 #### Get Profile (`GET /users/:userId`)
+
 - ✅ Valid token with matching userId
 - ❌ No token provided (401)
 - ❌ Invalid token (403)
@@ -39,6 +45,7 @@ Tests all user-related API endpoints with full authentication coverage:
 - ❌ User not found (404)
 
 #### Update Profile (`PATCH /users/:userId`)
+
 - ✅ Valid token with matching userId
 - ❌ No token provided (401)
 - ❌ Invalid token (403)
@@ -51,24 +58,29 @@ Tests all user-related API endpoints with full authentication coverage:
 **Coverage**: 96% for user controllers and 100% for validation schemas
 
 ### 3. `services.test.ts` - Business Logic Tests
+
 Tests the service layer functions that handle business logic:
 
 #### User Creation (`createUser`)
+
 - ✅ Successful user creation with password hashing
 - ❌ Database error handling
 
 #### User Login (`loginUser`)
+
 - ✅ Successful login with JWT token generation
 - ❌ User not found error
 - ❌ Invalid password error
 - ❌ Database error handling
 
 #### Get User by ID (`getUserById`)
+
 - ✅ Successful user retrieval
 - ❌ User not found error
 - ❌ Database error handling
 
 #### Update User (`updateUser`)
+
 - ✅ Successful user update
 - ✅ Password hashing when password is updated
 - ❌ No updates provided error
@@ -87,12 +99,14 @@ Tests the service layer functions that handle business logic:
 ## Key Features Tested
 
 ### Authentication & Authorization
+
 - JWT token validation
 - User isolation (users can only access their own data)
 - Token expiration handling
 - Proper error responses for authentication failures
 
 ### Input Validation
+
 - Email format validation
 - Password length requirements
 - Name length requirements
@@ -100,12 +114,14 @@ Tests the service layer functions that handle business logic:
 - Required field validation
 
 ### Error Handling
+
 - Database error handling
 - User not found scenarios
 - Invalid input scenarios
 - Authentication failure scenarios
 
 ### Security
+
 - Password hashing verification
 - JWT token generation and validation
 - User authorization checks
@@ -129,6 +145,7 @@ yarn test --watch
 ## Test Structure
 
 The tests follow a layered approach:
+
 1. **Unit Tests**: Test individual functions in isolation
 2. **Integration Tests**: Test API endpoints with mocked dependencies
 3. **Middleware Tests**: Test authentication and validation middleware
@@ -146,4 +163,4 @@ The tests follow a layered approach:
 3. **Comprehensive Coverage**: Tests cover both success and failure scenarios
 4. **Proper Mocking**: External dependencies are properly mocked
 5. **Error Scenarios**: All error conditions are tested
-6. **Security Testing**: Authentication and authorization are thoroughly tested 
+6. **Security Testing**: Authentication and authorization are thoroughly tested

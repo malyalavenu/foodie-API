@@ -30,4 +30,4 @@ services:
     command: yarn dev
 volumes:
   db_data:
-  app_node_modules: 
+  app_node_modules:

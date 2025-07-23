@@ -25,6 +25,7 @@ Swagger UI is available at [http://localhost:3000/docs](http://localhost:3000/do
 ## Endpoint
 
 ### POST /users
+
 - Registers a new user.
 - Request body: `{ name, email, password, phone }`
-- Response: `{ userId, message }` 
+- Response: `{ userId, message }`
