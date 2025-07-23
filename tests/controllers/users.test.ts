@@ -1,7 +1,16 @@
 import request from 'supertest';
 import express from 'express';
-import { validateUserRegistration, validateUserUpdate, validateUserLogin } from '../../src/controllers/users/schema';
-import { registerUser, updateUserProfile, loginUserController, getUserProfile } from '../../src/controllers/users';
+import {
+  validateUserRegistration,
+  validateUserUpdate,
+  validateUserLogin,
+} from '../../src/controllers/users/schema';
+import {
+  registerUser,
+  updateUserProfile,
+  loginUserController,
+  getUserProfile,
+} from '../../src/controllers/users';
 import { authenticateToken } from '../../src/middleware/auth';
 
 // Create test app
@@ -12,7 +21,12 @@ app.use(express.json());
 app.post('/users', validateUserRegistration, registerUser);
 app.post('/users/login', validateUserLogin, loginUserController);
 app.get('/users/:userId', authenticateToken, getUserProfile);
-app.patch('/users/:userId', authenticateToken, validateUserUpdate, updateUserProfile);
+app.patch(
+  '/users/:userId',
+  authenticateToken,
+  validateUserUpdate,
+  updateUserProfile
+);
 
 // Mock the database services
 jest.mock('../../src/services/users', () => ({
@@ -22,7 +36,12 @@ jest.mock('../../src/services/users', () => ({
   updateUser: jest.fn(),
 }));
 
-import { createUser, loginUser, getUserById, updateUser } from '../../src/services/users';
+import {
+  createUser,
+  loginUser,
+  getUserById,
+  updateUser,
+} from '../../src/services/users';
 
 const mockCreateUser = createUser as jest.MockedFunction<typeof createUser>;
 const mockLoginUser = loginUser as jest.MockedFunction<typeof loginUser>;
@@ -39,7 +58,7 @@ describe('Users API', () => {
       name: 'John Doe',
       email: 'john@example.com',
       password: 'password123',
-      phone: '1234567890'
+      phone: '1234567890',
     };
 
     it('should register a new user with valid data', async () => {
@@ -52,7 +71,7 @@ describe('Users API', () => {
 
       expect(response.body).toEqual({
         userId: 'user-123',
-        message: 'User registered successfully'
+        message: 'User registered successfully',
       });
       expect(mockCreateUser).toHaveBeenCalledWith(validUserData);
     });
@@ -60,7 +79,7 @@ describe('Users API', () => {
     it('should return 400 for missing required fields', async () => {
       const invalidData = {
         name: 'John Doe',
-        email: 'john@example.com'
+        email: 'john@example.com',
         // missing password and phone
       };
 
@@ -76,7 +95,7 @@ describe('Users API', () => {
     it('should return 400 for invalid email format', async () => {
       const invalidData = {
         ...validUserData,
-        email: 'invalid-email'
+        email: 'invalid-email',
       };
 
       const response = await request(app)
@@ -91,7 +110,7 @@ describe('Users API', () => {
     it('should return 400 for password too short', async () => {
       const invalidData = {
         ...validUserData,
-        password: '123'
+        password: '123',
       };
 
       const response = await request(app)
@@ -106,7 +125,7 @@ describe('Users API', () => {
     it('should return 400 for name too short', async () => {
       const invalidData = {
         ...validUserData,
-        name: 'J'
+        name: 'J',
       };
 
       const response = await request(app)
@@ -121,7 +140,7 @@ describe('Users API', () => {
     it('should return 400 for phone too short', async () => {
       const invalidData = {
         ...validUserData,
-        phone: '123'
+        phone: '123',
       };
 
       const response = await request(app)
@@ -137,13 +156,13 @@ describe('Users API', () => {
   describe('POST /users/login', () => {
     const validLoginData = {
       email: 'john@example.com',
-      password: 'password123'
+      password: 'password123',
     };
 
     it('should login user with valid credentials', async () => {
       const mockResult = {
         token: 'jwt-token-123',
-        userId: 'user-123'
+        userId: 'user-123',
       };
       mockLoginUser.mockResolvedValue(mockResult);
 
@@ -153,12 +172,15 @@ describe('Users API', () => {
         .expect(200);
 
       expect(response.body).toEqual(mockResult);
-      expect(mockLoginUser).toHaveBeenCalledWith(validLoginData.email, validLoginData.password);
+      expect(mockLoginUser).toHaveBeenCalledWith(
+        validLoginData.email,
+        validLoginData.password
+      );
     });
 
     it('should return 400 for missing email', async () => {
       const invalidData = {
-        password: 'password123'
+        password: 'password123',
       };
 
       const response = await request(app)
@@ -172,7 +194,7 @@ describe('Users API', () => {
 
     it('should return 400 for missing password', async () => {
       const invalidData = {
-        email: 'john@example.com'
+        email: 'john@example.com',
       };
 
       const response = await request(app)
@@ -187,7 +209,7 @@ describe('Users API', () => {
     it('should return 400 for invalid email format', async () => {
       const invalidData = {
         email: 'invalid-email',
-        password: 'password123'
+        password: 'password123',
       };
 
       const response = await request(app)
@@ -202,7 +224,7 @@ describe('Users API', () => {
     it('should return 400 for password too short', async () => {
       const invalidData = {
         email: 'john@example.com',
-        password: '123'
+        password: '123',
       };
 
       const response = await request(app)
@@ -218,7 +240,9 @@ describe('Users API', () => {
   describe('GET /users/:userId (Get Profile)', () => {
     const generateToken = (userId: string) => {
       const jwt = require('jsonwebtoken');
-      return jwt.sign({ userId }, process.env.JWT_SECRET || 'test-secret', { expiresIn: '1h' });
+      return jwt.sign({ userId }, process.env.JWT_SECRET || 'test-secret', {
+        expiresIn: '1h',
+      });
     };
 
     it('should get user profile with valid token and matching userId', async () => {
@@ -230,7 +254,7 @@ describe('Users API', () => {
         email: 'john@example.com',
         phone: '1234567890',
         createdAt: '2024-01-01T00:00:00Z',
-        updatedAt: '2024-01-01T00:00:00Z'
+        updatedAt: '2024-01-01T00:00:00Z',
       };
       mockGetUserById.mockResolvedValue(mockUser);
 
@@ -244,9 +268,7 @@ describe('Users API', () => {
     });
 
     it('should return 401 when no token is provided', async () => {
-      const response = await request(app)
-        .get('/users/user-123')
-        .expect(401);
+      const response = await request(app).get('/users/user-123').expect(401);
 
       expect(response.body.error).toBe('Access token required');
       expect(mockGetUserById).not.toHaveBeenCalled();
@@ -290,12 +312,14 @@ describe('Users API', () => {
   describe('PATCH /users/:userId (Update Profile)', () => {
     const generateToken = (userId: string) => {
       const jwt = require('jsonwebtoken');
-      return jwt.sign({ userId }, process.env.JWT_SECRET || 'test-secret', { expiresIn: '1h' });
+      return jwt.sign({ userId }, process.env.JWT_SECRET || 'test-secret', {
+        expiresIn: '1h',
+      });
     };
 
     const validUpdateData = {
       name: 'Jane Doe',
-      phone: '0987654321'
+      phone: '0987654321',
     };
 
     it('should update user profile with valid token and matching userId', async () => {
@@ -307,7 +331,7 @@ describe('Users API', () => {
         email: 'john@example.com',
         phone: '0987654321',
         createdAt: '2024-01-01T00:00:00Z',
-        updatedAt: '2024-01-01T00:00:00Z'
+        updatedAt: '2024-01-01T00:00:00Z',
       };
       mockUpdateUser.mockResolvedValue(mockUpdatedUser);
 
@@ -358,7 +382,7 @@ describe('Users API', () => {
       const userId = 'user-123';
       const token = generateToken(userId);
       const invalidData = {
-        email: 'invalid-email'
+        email: 'invalid-email',
       };
 
       const response = await request(app)
@@ -389,7 +413,7 @@ describe('Users API', () => {
       const userId = 'user-123';
       const token = generateToken(userId);
       const invalidData = {
-        password: '123'
+        password: '123',
       };
 
       const response = await request(app)
