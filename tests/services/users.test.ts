@@ -1,6 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { createUser, loginUser, getUserById, updateUser } from '../../src/services/users';
+import {
+  createUser,
+  loginUser,
+  getUserById,
+  updateUser,
+} from '../../src/services/users';
 
 // Mock the database
 jest.mock('../../src/utils/db', () => ({
@@ -15,8 +20,12 @@ describe('Users Services', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     // Mock bcrypt
-    jest.spyOn(bcrypt, 'hash').mockImplementation(() => Promise.resolve('hashed-password'));
-    jest.spyOn(bcrypt, 'compare').mockImplementation(() => Promise.resolve(true));
+    jest
+      .spyOn(bcrypt, 'hash')
+      .mockImplementation(() => Promise.resolve('hashed-password'));
+    jest
+      .spyOn(bcrypt, 'compare')
+      .mockImplementation(() => Promise.resolve(true));
     // Mock jwt
     jest.spyOn(jwt, 'sign').mockImplementation(() => 'jwt-token');
   });
@@ -30,7 +39,7 @@ describe('Users Services', () => {
       name: 'John Doe',
       email: 'john@example.com',
       password: 'password123',
-      phone: '1234567890'
+      phone: '1234567890',
     };
 
     it('should create a new user successfully', async () => {
@@ -39,7 +48,7 @@ describe('Users Services', () => {
         command: 'INSERT',
         rowCount: 1,
         oid: 0,
-        fields: []
+        fields: [],
       };
       mockDb.query.mockResolvedValue(mockResult);
 
@@ -55,7 +64,7 @@ describe('Users Services', () => {
           'hashed-password',
           userData.phone,
           expect.any(Date), // createdAt
-          expect.any(Date)  // updatedAt
+          expect.any(Date), // updatedAt
         ])
       );
       expect(bcrypt.hash).toHaveBeenCalledWith(userData.password, 10);
@@ -71,19 +80,21 @@ describe('Users Services', () => {
   describe('loginUser', () => {
     const loginData = {
       email: 'john@example.com',
-      password: 'password123'
+      password: 'password123',
     };
 
     it('should login user with valid credentials', async () => {
       const mockResult = {
-        rows: [{
-          id: 'user-123',
-          password: 'hashed-password'
-        }],
+        rows: [
+          {
+            id: 'user-123',
+            password: 'hashed-password',
+          },
+        ],
         command: 'SELECT',
         rowCount: 1,
         oid: 0,
-        fields: []
+        fields: [],
       };
       mockDb.query.mockResolvedValue(mockResult);
 
@@ -91,13 +102,16 @@ describe('Users Services', () => {
 
       expect(result).toEqual({
         token: 'jwt-token',
-        userId: 'user-123'
+        userId: 'user-123',
       });
       expect(mockDb.query).toHaveBeenCalledWith(
         'SELECT id, password FROM users WHERE email = $1',
         [loginData.email]
       );
-      expect(bcrypt.compare).toHaveBeenCalledWith(loginData.password, 'hashed-password');
+      expect(bcrypt.compare).toHaveBeenCalledWith(
+        loginData.password,
+        'hashed-password'
+      );
       expect(jwt.sign).toHaveBeenCalledWith(
         { userId: 'user-123' },
         process.env.JWT_SECRET,
@@ -111,37 +125,42 @@ describe('Users Services', () => {
         command: 'SELECT',
         rowCount: 0,
         oid: 0,
-        fields: []
+        fields: [],
       };
       mockDb.query.mockResolvedValue(mockResult);
 
-      await expect(loginUser(loginData.email, loginData.password))
-        .rejects.toThrow('Invalid email or password');
+      await expect(
+        loginUser(loginData.email, loginData.password)
+      ).rejects.toThrow('Invalid email or password');
     });
 
     it('should throw error when password is invalid', async () => {
       const mockResult = {
-        rows: [{
-          id: 'user-123',
-          password: 'hashed-password'
-        }],
+        rows: [
+          {
+            id: 'user-123',
+            password: 'hashed-password',
+          },
+        ],
         command: 'SELECT',
         rowCount: 1,
         oid: 0,
-        fields: []
+        fields: [],
       };
       mockDb.query.mockResolvedValue(mockResult);
       jest.spyOn(bcrypt, 'compare').mockResolvedValue(false as never);
 
-      await expect(loginUser(loginData.email, loginData.password))
-        .rejects.toThrow('Invalid email or password');
+      await expect(
+        loginUser(loginData.email, loginData.password)
+      ).rejects.toThrow('Invalid email or password');
     });
 
     it('should throw error when database query fails', async () => {
       mockDb.query.mockRejectedValue(new Error('Database error'));
 
-      await expect(loginUser(loginData.email, loginData.password))
-        .rejects.toThrow('Database error');
+      await expect(
+        loginUser(loginData.email, loginData.password)
+      ).rejects.toThrow('Database error');
     });
   });
 
@@ -155,14 +174,14 @@ describe('Users Services', () => {
         email: 'john@example.com',
         phone: '1234567890',
         createdAt: '2024-01-01T00:00:00Z',
-        updatedAt: '2024-01-01T00:00:00Z'
+        updatedAt: '2024-01-01T00:00:00Z',
       };
       const mockResult = {
         rows: [mockUser],
         command: 'SELECT',
         rowCount: 1,
         oid: 0,
-        fields: []
+        fields: [],
       };
       mockDb.query.mockResolvedValue(mockResult);
 
@@ -181,7 +200,7 @@ describe('Users Services', () => {
         command: 'SELECT',
         rowCount: 0,
         oid: 0,
-        fields: []
+        fields: [],
       };
       mockDb.query.mockResolvedValue(mockResult);
 
@@ -199,7 +218,7 @@ describe('Users Services', () => {
     const userId = 'user-123';
     const updates = {
       name: 'Jane Doe',
-      phone: '0987654321'
+      phone: '0987654321',
     };
 
     it('should update user successfully', async () => {
@@ -209,14 +228,14 @@ describe('Users Services', () => {
         email: 'john@example.com',
         phone: '0987654321',
         createdAt: '2024-01-01T00:00:00Z',
-        updatedAt: '2024-01-01T00:00:00Z'
+        updatedAt: '2024-01-01T00:00:00Z',
       };
       const mockResult = {
         rows: [mockUpdatedUser],
         command: 'UPDATE',
         rowCount: 1,
         oid: 0,
-        fields: []
+        fields: [],
       };
       mockDb.query.mockResolvedValue(mockResult);
 
@@ -232,7 +251,7 @@ describe('Users Services', () => {
     it('should hash password when password is updated', async () => {
       const updatesWithPassword = {
         ...updates,
-        password: 'newpassword123'
+        password: 'newpassword123',
       };
       const mockUpdatedUser = {
         id: userId,
@@ -240,14 +259,14 @@ describe('Users Services', () => {
         email: 'john@example.com',
         phone: '0987654321',
         createdAt: '2024-01-01T00:00:00Z',
-        updatedAt: '2024-01-01T00:00:00Z'
+        updatedAt: '2024-01-01T00:00:00Z',
       };
       const mockResult = {
         rows: [mockUpdatedUser],
         command: 'UPDATE',
         rowCount: 1,
         oid: 0,
-        fields: []
+        fields: [],
       };
       mockDb.query.mockResolvedValue(mockResult);
 
@@ -255,13 +274,17 @@ describe('Users Services', () => {
 
       expect(bcrypt.hash).toHaveBeenCalledWith('newpassword123', 10);
       expect(mockDb.query).toHaveBeenCalledWith(
-        expect.stringContaining('UPDATE users SET name = $1, phone = $2, password = $3'),
+        expect.stringContaining(
+          'UPDATE users SET name = $1, phone = $2, password = $3'
+        ),
         ['Jane Doe', '0987654321', 'hashed-password', userId]
       );
     });
 
     it('should throw error when no updates provided', async () => {
-      await expect(updateUser(userId, {})).rejects.toThrow('No updates provided');
+      await expect(updateUser(userId, {})).rejects.toThrow(
+        'No updates provided'
+      );
       expect(mockDb.query).not.toHaveBeenCalled();
     });
 
@@ -271,17 +294,21 @@ describe('Users Services', () => {
         command: 'UPDATE',
         rowCount: 0,
         oid: 0,
-        fields: []
+        fields: [],
       };
       mockDb.query.mockResolvedValue(mockResult);
 
-      await expect(updateUser(userId, updates)).rejects.toThrow('User not found');
+      await expect(updateUser(userId, updates)).rejects.toThrow(
+        'User not found'
+      );
     });
 
     it('should throw error when database query fails', async () => {
       mockDb.query.mockRejectedValue(new Error('Database error'));
 
-      await expect(updateUser(userId, updates)).rejects.toThrow('Database error');
+      await expect(updateUser(userId, updates)).rejects.toThrow(
+        'Database error'
+      );
     });
   });
-}); 
+});
