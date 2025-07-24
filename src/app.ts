@@ -3,11 +3,11 @@ import swaggerUi from 'swagger-ui-express';
 import yamljs from 'yamljs';
 import path from 'path';
 import usersRouter from './routes/users';
+import restaurantsRouter from './routes/restaurants';
 import { errorHandler } from './middleware/error';
 import { loggerMiddleware } from './middleware/logger';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -26,6 +26,7 @@ app.get('/docs/swagger.yaml', (req, res) => {
 
 // Routes
 app.use('/users', usersRouter);
+app.use('/restaurants', restaurantsRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -34,10 +35,5 @@ app.get('/health', (req, res) => {
 
 // Error handling middleware
 app.use(errorHandler);
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  console.log(`API Documentation available at http://localhost:${PORT}/docs`);
-});
 
 export default app;
