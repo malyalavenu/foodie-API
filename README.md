@@ -1,3 +1,8 @@
+[![CI](https://github.com/malyalavenu/foodie-API/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/malyalavenu/foodie-API/actions/workflows/ci.yml)
+[![Tests](https://github.com/malyalavenu/foodie-API/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/malyalavenu/foodie-API/actions/workflows/ci.yml)
+
+> **Note:** This repository is maintained using an AI code assistant.
+
 # Foodie-API
 
 Backend for Foodie-API. Only the POST /users endpoint is implemented in this version.
@@ -21,11 +26,3 @@ Backend for Foodie-API. Only the POST /users endpoint is implemented in this ver
 ## API Documentation
 
 Swagger UI is available at [http://localhost:3000/docs](http://localhost:3000/docs)
-
-## Endpoint
-
-### POST /users
-
-- Registers a new user.
-- Request body: `{ name, email, password, phone }`
-- Response: `{ userId, message }`
