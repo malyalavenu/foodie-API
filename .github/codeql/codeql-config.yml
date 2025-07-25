@@ -1,0 +1,46 @@
+name: "Foodie API CodeQL Configuration"
+
+# Disable default queries and use custom query suite
+disable-default-queries: false
+
+# Include additional query suites
+queries:
+  - uses: security-and-quality
+  - uses: security-extended
+  - uses: ./custom-queries
+
+# Paths to include in analysis
+paths:
+  - src/
+  - tests/
+
+# Paths to exclude from analysis
+paths-ignore:
+  - node_modules/
+  - dist/
+  - coverage/
+  - .git/
+
+# Additional options
+options:
+  # Enable TypeScript analysis
+  javascript:
+    typescript: true
+  
+  # Custom query options
+  query-filters:
+    - include:
+        tags contain: security
+    - exclude:
+        tags contain: experimental
+
+# Custom query suite configuration
+query-suites:
+  - name: foodie-api-security
+    description: "Custom security queries for Foodie API"
+    queries:
+      - uses: ./custom-queries/sql-injection.ql
+      - uses: ./custom-queries/jwt-security.ql
+      - uses: ./custom-queries/input-validation.ql
+      - uses: ./custom-queries/authentication-bypass.ql
+      - uses: ./custom-queries/error-handling.ql 
