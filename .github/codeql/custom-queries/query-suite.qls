@@ -1,0 +1,27 @@
+# Foodie API Custom Security Query Suite
+# This file defines the custom security queries for the foodie-API project
+
+# SQL Injection Detection
+- include: sql-injection.ql
+
+# JWT Security Vulnerabilities
+- include: jwt-security.ql
+
+# Input Validation Issues
+- include: input-validation.ql
+
+# Authentication Bypass Detection
+- include: authentication-bypass.ql
+
+# Error Handling Vulnerabilities
+- include: error-handling.ql
+
+# Query metadata
+metadata:
+  name: "Foodie API Security Queries"
+  description: "Custom security queries for foodie-API project"
+  tags:
+    - security
+    - foodie-api
+    - typescript
+    - nodejs 
