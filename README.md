@@ -1,5 +1,6 @@
 [![CI](https://github.com/malyalavenu/foodie-API/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/malyalavenu/foodie-API/actions/workflows/ci.yml)
-[![Tests](https://github.com/malyalavenu/foodie-API/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/malyalavenu/foodie-API/actions/workflows/ci.yml)
+[![Unit Tests](https://github.com/malyalavenu/foodie-API/actions/workflows/unit-tests.yml/badge.svg?branch=main)](https://github.com/malyalavenu/foodie-API/actions/workflows/unit-tests.yml)
+[![CodeQL](https://github.com/malyalavenu/foodie-API/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/malyalavenu/foodie-API/actions/workflows/codeql.yml)
 
 > **Note:** This repository is maintained using an AI code assistant.
 
