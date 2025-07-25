@@ -42,6 +42,7 @@ components:
 paths:
   /users:
     post:
+      operationId: createUser
       summary: Register a new user
       description: Registers a new user with name, email, password, and phone. Returns the user ID on success.
       tags:
@@ -105,6 +106,7 @@ paths:
 
   /users/{userId}:
     get:
+      operationId: getUserById
       summary: Get user profile
       description: Retrieve user profile information. Users can only access their own profile.
       tags:
@@ -180,6 +182,7 @@ paths:
                     type: string
 
     patch:
+      operationId: updateUser
       summary: Update user profile
       description: Update user profile fields (name, email, password, phone). Users can only update their own profile. Only provided fields are updated. Password is hashed if updated.
       tags:
@@ -286,6 +289,7 @@ paths:
 
   /users/login:
     post:
+      operationId: loginUser
       summary: User login
       description: Authenticate user and generate JWT token. Returns JWT token and user ID on success. Use this token in the Authorization header for protected routes.
       tags:
@@ -354,6 +358,7 @@ paths:
 
   /restaurants:
     get:
+      operationId: getRestaurants
       summary: Get a list of restaurants
       description: Retrieve a paginated list of restaurants. Supports filtering by location and cuisine. Authentication required.
       tags:
@@ -428,6 +433,7 @@ paths:
                     type: string
 
     post:
+      operationId: createRestaurant
       summary: Create a new restaurant
       description: Create a new restaurant with the provided details. Authentication required.
       tags:
@@ -525,6 +531,7 @@ paths:
 
   /restaurants/{restaurantId}:
     get:
+      operationId: getRestaurantById
       summary: Get a restaurant by ID
       description: Retrieve a single restaurant by its ID. Authentication required.
       tags:
