@@ -27,3 +27,4 @@ Backend for Foodie-API. Only the POST /users endpoint is implemented in this ver
 ## API Documentation
 
 Swagger UI is available at [http://localhost:3000/docs](http://localhost:3000/docs)
+# Trigger workflows
