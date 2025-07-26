@@ -6,7 +6,6 @@ const restaurantCreateSchema = Joi.object({
   address: Joi.string().min(5).max(200).required(),
   rating: Joi.number().min(0).max(5).required(),
   cuisine: Joi.string().min(2).max(50).required(),
-  menuId: Joi.string().required(),
   hours: Joi.string().min(5).max(100).required(),
 });
 

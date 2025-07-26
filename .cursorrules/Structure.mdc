@@ -1,0 +1,185 @@
+# Foodie-API Project Structure
+
+## 1. File and Directory Structure
+
+```
+foodie-API/
+├── src/
+│ ├── config/
+│ │ ├── database.ts # Database connection setup (pg.Pool)
+│ │ ├── swagger.ts # Swagger configuration for /docs endpoint
+│ │ └── env.ts # Environment variable loading (dotenv)
+│ ├── controllers/ # Request handlers for API endpoints
+│ │ ├── restaurants/
+│ │ │ ├── index.ts # Restaurant-related controllers
+│ │ │ └── schema.ts # Joi/Zod validation schemas
+│ │ ├── dishes/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── orders/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── favorites/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── history/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── support/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── users/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── reviews/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── promotions/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── tracking/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── notifications/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── analytics/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── recommendations/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── cart/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ ├── payments/
+│ │ │ ├── index.ts
+│ │ │ └── schema.ts
+│ │ └── search/
+│ │ ├── index.ts
+│ │ └── schema.ts
+│ ├── services/ # Business logic
+│ │ ├── restaurants.ts
+│ │ ├── dishes.ts
+│ │ ├── orders.ts
+│ │ ├── favorites.ts
+│ │ ├── history.ts
+│ │ ├── support.ts
+│ │ ├── users.ts
+│ │ ├── reviews.ts
+│ │ ├── promotions.ts
+│ │ ├── tracking.ts
+│ │ ├── notifications.ts
+│ │ ├── analytics.ts
+│ │ ├── recommendations.ts
+│ │ ├── cart.ts
+│ │ ├── payments.ts
+│ │ ├── search.ts
+│ │ └── auth.ts # JWT handling
+│ ├── models/ # Sequelize model definitions
+│ │ ├── User.ts
+│ │ ├── Restaurant.ts
+│ │ ├── Dish.ts
+│ │ ├── Order.ts
+│ │ ├── OrderItem.ts
+│ │ ├── Favorite.ts
+│ │ ├── Review.ts
+│ │ ├── Promotion.ts
+│ │ ├── SupportTicket.ts
+│ │ ├── Notification.ts
+│ │ ├── Cart.ts
+│ │ ├── CartItem.ts
+│ │ ├── Payment.ts
+│ │ └── Tracking.ts
+│ ├── migrations/ # Sequelize migrations
+│ │ ├── <yyyymmdd>-create-users.ts
+│ │ ├── <yyyymmdd>-create-restaurants.ts
+│ │ ├── <yyyymmdd>-create-dishes.ts
+│ │ ├── <yyyymmdd>-create-orders.ts
+│ │ ├── <yyyymmdd>-create-order-items.ts
+│ │ ├── <yyyymmdd>-create-favorites.ts
+│ │ ├── <yyyymmdd>-create-reviews.ts
+│ │ ├── <yyyymmdd>-create-promotions.ts
+│ │ ├── <yyyymmdd>-create-support-tickets.ts
+│ │ ├── <yyyymmdd>-create-notifications.ts
+│ │ ├── <yyyymmdd>-create-carts.ts
+│ │ ├── <yyyymmdd>-create-cart-items.ts
+│ │ ├── <yyyymmdd>-create-payments.ts
+│ │ └── <yyyymmdd>-create-tracking.ts
+│ ├── routes/
+│ │ ├── index.ts # Main router combining all routes
+│ │ ├── restaurants.ts
+│ │ ├── dishes.ts
+│ │ ├── orders.ts
+│ │ ├── favorites.ts
+│ │ ├── history.ts
+│ │ ├── support.ts
+│ │ ├── users.ts
+│ │ ├── reviews.ts
+│ │ ├── promotions.ts
+│ │ ├── tracking.ts
+│ │ ├── notifications.ts
+│ │ ├── analytics.ts
+│ │ ├── recommendations.ts
+│ │ ├── cart.ts
+│ │ ├── payments.ts
+│ │ └── search.ts
+│ ├── middleware/
+│ │ ├── auth.ts # JWT authentication middleware
+│ │ ├── rateLimit.ts # Rate limiting middleware
+│ │ ├── validate.ts # Joi/Zod validation middleware
+│ │ ├── error.ts # Error handling middleware
+│ │ └── logger.ts # Winston logging middleware
+│ ├── utils/
+│ │ ├── db.ts # Raw SQL query helpers (using pg)
+│ │ ├── redis.ts # Redis client setup (optional)
+│ │ ├── websocket.ts # WebSocket setup for real-time features
+│ │ └── constants.ts # App-wide constants
+│ ├── types/
+│ │ ├── index.ts # Custom TypeScript types/interfaces
+│ │ └── swagger.yaml # OpenAPI specification for Swagger
+│ ├── tests/
+│ │ ├── unit/
+│ │ │ ├── controllers/
+│ │ │ ├── services/
+│ │ │ └── mocks/ # Mock data and services (sinon)
+│ │ ├── integration/
+│ │ │ ├── restaurants.test.ts
+│ │ │ ├── orders.test.ts
+│ │ │ ├── users.test.ts
+│ │ │ └── ... # Other integration tests
+│ │ └── setup.ts # Test setup (mock DB, Jest config)
+│ └── app.ts # Express app setup and entry point
+├── .env # Environment variables (not committed)
+├── .env.example # Example environment variables
+├── .gitignore # Git ignore file
+├── Dockerfile # Docker configuration
+├── docker-compose.yml # Docker Compose for local dev
+├── package.json # Project dependencies (no "module" field)
+├── tsconfig.json # TypeScript configuration
+├── jest.config.ts # Jest configuration
+├── README.md # Project documentation
+└── swagger.yaml # Base OpenAPI specification
+```
+
+## 2. Module Organization Overview
+
+### Controllers Layer
+- **Purpose**: Handle HTTP requests and responses
+- **Structure**: Each feature has its own directory with `index.ts` and `schema.ts`
+- **Responsibilities**: Request validation, response formatting, error handling, authentication checks
+
+### Services Layer
+- **Purpose**: Business logic implementation
+- **Structure**: One file per feature domain
+- **Responsibilities**: Database operations, business rule enforcement, external service integration
+
+### Models Layer
+- **Purpose**: Sequelize model definitions for type safety
+- **Structure**: One file per database table
+- **Responsibilities**: Database schema definition, type safety for TypeScript
+
+### Routes Layer
+- **Purpose**: Express route definitions
+- **Structure**: One file per feature domain
+- **Responsibilities**: Route path definitions, middleware application, controller method mapping 
