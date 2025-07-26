@@ -79,7 +79,6 @@ describe('Restaurant Controller', () => {
       address: '123 Main St, City, State',
       rating: 4.5,
       cuisine: 'Italian',
-      menuId: 'menu-123',
       hours: 'Mon-Fri: 9AM-10PM, Sat-Sun: 10AM-11PM',
     };
 
@@ -110,7 +109,6 @@ describe('Restaurant Controller', () => {
       address: '123 Main St, City, State',
       rating: 4.5,
       cuisine: 'Italian',
-      menuId: 'menu-123',
       hours: 'Mon-Fri: 9AM-10PM, Sat-Sun: 10AM-11PM',
     };
 
@@ -127,7 +125,6 @@ describe('Restaurant Controller', () => {
       address: '123 Main St',
       rating: 6, // Invalid: rating > 5
       cuisine: 'Italian',
-      menuId: 'menu-123',
       hours: 'Mon-Fri: 9AM-10PM',
     };
 

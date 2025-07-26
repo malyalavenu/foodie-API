@@ -1,0 +1,179 @@
+# Foodie-API Task Management
+
+## Overview
+
+This document defines the formalized workflow for managing technical tasks in the Foodie-API project. It ensures consistent development practices, proper issue tracking, and maintainable code history.
+
+## 1. Initial Repository Setup
+
+### First-Time Setup
+- **Initial Commit**: When the repository is empty, the first changes will be committed as the initial commit
+- **Development Branch**: All feature development will branch from the `development` branch
+- **Default Branch**: `development` is the default branch unless explicitly specified otherwise
+
+## 2. Standard Task Workflow
+
+### Step 1: Issue Creation
+- **Primary Method**: Use GitHub MCP to create issues
+- **Fallback Method**: If GitHub MCP fails or is not configured, use GitHub CLI
+- **Issue Requirements**: 
+  - Clear title describing the task
+  - Detailed description of requirements
+  - Acceptance criteria
+  - Labels for categorization
+
+### Step 2: Branch Creation
+- **Source Branch**: Always cut feature branches from `development`
+- **Branch Naming Convention**: Four nodes separated by hyphens
+  - **Node 1**: `issue`
+  - **Node 2**: Issue number (e.g., `1`, `24`)
+  - **Node 3**: One-word action (e.g., `create`, `fix`, `update`)
+  - **Node 4**: One-word context (e.g., `users`, `api`, `auth`)
+
+#### Branch Naming Examples
+- Issue #1 - Create users API → `issue-1-create-users`
+- Issue #24 - Fix authentication bug → `issue-24-fix-auth`
+- Issue #15 - Update restaurant schema → `issue-15-update-restaurants`
+
+#### Branch Naming Guidelines
+- Keep branch names concise and indicative
+- Avoid full descriptions in branch names
+- Use lowercase letters and hyphens only
+- Maximum 50 characters recommended
+
+### Step 3: Development Workflow
+1. **Checkout Branch**: Always checkout the feature branch before making changes
+2. **Code Changes**: Implement the required functionality
+3. **Testing**: Ensure all tests pass locally
+4. **Code Review**: Self-review before committing
+
+### Step 4: Commit Guidelines
+- **Commit Prefix**: Always prefix commits with `[#<issue_number>] -`
+- **Message Length**: Keep commit messages under 50 characters
+- **Message Style**: Use imperative mood (e.g., "Add user authentication")
+
+#### Commit Examples
+- `[#1] - Add user registration endpoint`
+- `[#24] - Fix JWT token validation`
+- `[#15] - Update restaurant model schema`
+
+### Step 5: Remote Push
+- **Confirmation Required**: Wait for user confirmation before pushing to remote
+- **Batch Commits**: If multiple commits are queued, push all at once
+- **Push Command**: `git push origin <branch-name>`
+
+### Step 6: Pull Request Creation
+- **Pre-PR Checks**: Before raising a PR, ensure that:
+  - All unit and integration tests pass locally
+  - All linters (e.g., ESLint) pass with no errors
+  - All formatting checks (e.g., Prettier) pass
+  - Any other required checks (type checks, coverage, etc.) pass
+  - If any test, linter, or formatting check fails, fix the issues and retest until all checks pass
+- **Target Branch**: Default to `development` branch
+- **Alternative Target**: Only use different target if explicitly specified by user
+- **PR Requirements**:
+  - Clear title referencing the issue
+  - Detailed description of changes
+  - Link to the original issue
+  - List of changes made
+
+### Step 7: CI/CD Pipeline
+- **Automatic Trigger**: CI/CD pipeline runs automatically on PR creation
+- **Test Verification**: Ensure all tests pass in the pipeline
+- **Quality Gates**: Code coverage and linting checks must pass
+- **Manual Review**: Wait for code review approval
+
+## 3. Quality Assurance
+
+### Code Standards
+- **TypeScript**: Strict type checking enabled
+- **Linting**: ESLint rules must pass
+- **Formatting**: Prettier formatting applied
+- **Testing**: 80%+ code coverage required
+
+### Review Process
+- **Self-Review**: Review your own code before committing
+- **Peer Review**: Request reviews from team members
+- **Automated Checks**: Ensure CI/CD pipeline passes
+- **Documentation**: Update relevant documentation
+
+## 4. Issue Management
+
+### Issue Types
+- **Feature**: New functionality implementation
+- **Bug**: Fix existing issues
+- **Enhancement**: Improve existing features
+- **Documentation**: Update docs or comments
+- **Refactor**: Code restructuring
+
+### Issue Labels
+- `enhancement`: New features
+- `bug`: Bug fixes
+- `documentation`: Documentation updates
+- `good first issue`: Beginner-friendly tasks
+- `help wanted`: Needs assistance
+- `priority: high/medium/low`: Priority levels
+
+## 5. Branch Management
+
+### Branch Lifecycle
+1. **Create**: From `development` branch
+2. **Develop**: Implement features and fixes
+3. **Test**: Ensure all tests pass
+4. **Review**: Code review process
+5. **Merge**: Into `development` branch
+6. **Delete**: Clean up merged branches
+
+### Branch Protection
+- **Development Branch**: Protected against direct pushes
+- **Required Reviews**: At least one approval required
+- **Status Checks**: CI/CD must pass before merge
+- **Up-to-date**: Branch must be up-to-date with target
+
+## 6. Communication Guidelines
+
+### Commit Messages
+- **Format**: `[#<issue>] - <action> <subject>`
+- **Examples**:
+  - `[#1] - Add user authentication`
+  - `[#24] - Fix database connection`
+  - `[#15] - Update API documentation`
+
+### PR Descriptions
+- **Issue Reference**: Link to the original issue
+- **Change Summary**: Brief overview of changes
+- **Testing Notes**: How to test the changes
+- **Breaking Changes**: Note any breaking changes
+
+## 7. Emergency Procedures
+
+### Hotfixes
+- **Branch Source**: From `main` branch
+- **Naming**: `hotfix-<issue>-<description>`
+- **Target**: `main` branch
+- **Process**: Same workflow but with expedited review
+
+### Rollbacks
+- **Revert Commits**: Use `git revert` for clean history
+- **Issue Creation**: Create issue for rollback tracking
+- **Communication**: Notify team of rollback
+
+## 8. Best Practices
+
+### Development
+- **Small Commits**: Make frequent, small commits
+- **Clear Messages**: Write descriptive commit messages
+- **Test Coverage**: Maintain high test coverage
+- **Code Review**: Always review before merging
+
+### Communication
+- **Issue Updates**: Keep issues updated with progress
+- **Team Sync**: Regular communication about blockers
+- **Documentation**: Update docs as you develop
+- **Knowledge Sharing**: Share learnings with team
+
+### Quality
+- **Code Standards**: Follow established coding standards
+- **Performance**: Consider performance implications
+- **Security**: Review security implications
+- **Accessibility**: Ensure accessibility compliance

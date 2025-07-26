@@ -28,8 +28,6 @@ components:
           format: float
         cuisine:
           type: string
-        menuId:
-          type: string
         hours:
           type: string
         createdAt:
@@ -451,7 +449,6 @@ paths:
                 - address
                 - rating
                 - cuisine
-                - menuId
                 - hours
               properties:
                 name:
@@ -474,9 +471,6 @@ paths:
                   minLength: 2
                   maxLength: 50
                   example: 'Italian'
-                menuId:
-                  type: string
-                  example: 'menu-123'
                 hours:
                   type: string
                   minLength: 5

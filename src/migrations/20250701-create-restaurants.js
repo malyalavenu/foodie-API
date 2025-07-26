@@ -26,10 +26,6 @@ module.exports = {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      menuId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       hours: {
         type: DataTypes.STRING,
         allowNull: false,
