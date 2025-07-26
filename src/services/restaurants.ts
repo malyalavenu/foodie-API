@@ -48,14 +48,13 @@ export const createRestaurant = async (restaurantData: {
   address: string;
   rating: number;
   cuisine: string;
-  menuId: string;
   hours: string;
 }) => {
   const id = uuidv4();
   const now = new Date();
   const query = `
-    INSERT INTO restaurants (id, name, address, rating, cuisine, "menuId", hours, "createdAt", "updatedAt")
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    INSERT INTO restaurants (id, name, address, rating, cuisine, hours, "createdAt", "updatedAt")
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *
   `;
 
@@ -65,7 +64,6 @@ export const createRestaurant = async (restaurantData: {
     restaurantData.address,
     restaurantData.rating,
     restaurantData.cuisine,
-    restaurantData.menuId,
     restaurantData.hours,
     now,
     now,

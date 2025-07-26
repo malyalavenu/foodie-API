@@ -1,0 +1,134 @@
+# Foodie-API Project Requirements
+
+## 1. Technology Stack
+
+- **Server**: Node.js with TypeScript, Express for routing and middleware
+- **Database**: PostgreSQL, accessed via raw SQL queries using `pg` (no ORM for queries)
+- **Database Migrations/Models**: Use Sequelize for creating database migrations and models, but perform all database queries using raw SQL via `pg`
+- **Authentication**: JWT for user authentication, stored in HTTP headers
+- **Validation**: Use Joi or Zod for request validation
+- **Testing**: Unit tests for controllers/services, integration tests for APIs using Jest and Supertest
+- **Logging**: Winston for request/error logging
+- **Environment**: Load environment variables (DB credentials, JWT secret) using `dotenv`
+- **API Documentation**: Use Swagger for API documentation, provisioned at a `/docs` endpoint
+- **Docker**: The app should be running in a dockerized environment
+
+## 2. Database Requirements
+
+- Use PostgreSQL for relational data storage
+- Tables: `users`, `restaurants`, `dishes`, `orders`, `order_items`, `favorites`, `reviews`, `promotions`, `support_tickets`, `notifications`, `carts`, `cart_items`, `payments`, `tracking`
+- Migrations: Use Sequelize for schema migrations
+- Models: Define Sequelize models for type safety and schema reference, but do not use Sequelize for queries
+- Indexes on frequently queried fields (e.g., `userId`, `restaurantId`, `orderId`)
+- Foreign key constraints for relational integrity
+
+## 3. API Feature Requirements
+
+### Restaurant Management APIs
+- **GET /restaurants** - Fetch list of restaurants with location, cuisine filters, pagination
+- **GET /restaurants/{restaurantId}** - Fetch specific restaurant details
+
+### Dish Information APIs
+- **GET /restaurants/{restaurantId}/menu** - Fetch restaurant's menu with optional category filter
+- **GET /dishes/{dishId}** - Fetch specific dish details
+
+### Order Management APIs
+- **POST /orders** - Create a new order with items, delivery address, payment method
+- **GET /orders/{orderId}** - Fetch specific order details
+- **GET /users/{userId}/orders** - Fetch user's orders with status filter and pagination
+- **PATCH /orders/{orderId}** - Update order status (cancel, deliver)
+
+### Favorites APIs
+- **POST /users/{userId}/favorites** - Add restaurant/dish to favorites
+- **GET /users/{userId}/favorites** - Fetch user's favorites with optional item type filter
+- **DELETE /users/{userId}/favorites/{itemId}** - Remove item from favorites
+
+### Order History APIs
+- **GET /users/{userId}/history** - Fetch user's order history with pagination
+
+### Customer Support APIs
+- **POST /support/tickets** - Create support ticket
+- **GET /users/{userId}/support/tickets** - Fetch user's support tickets with status filter
+- **GET /support/tickets/{ticketId}** - Fetch specific ticket details
+
+### User Management APIs
+- **POST /users** - Register new user
+- **PATCH /users/{userId}** - Update user profile
+- **POST /users/login** - Authenticate user and generate JWT
+
+### Reviews and Ratings APIs
+- **POST /restaurants/{restaurantId}/reviews** - Submit restaurant review
+- **GET /restaurants/{restaurantId}/reviews** - Fetch restaurant reviews with pagination
+- **POST /dishes/{dishId}/reviews** - Submit dish review
+
+### Promotions and Discounts APIs
+- **GET /promotions** - Fetch active promotions with optional restaurant/location filters
+- **POST /orders/{orderId}/apply-promotion** - Apply promotion to order
+
+### Delivery Tracking APIs
+- **GET /orders/{orderId}/tracking** - Fetch delivery status and location
+- **POST /orders/{orderId}/tracking** - Update delivery status
+
+### Notifications APIs
+- **POST /users/{userId}/notifications** - Send notification to user
+- **GET /users/{userId}/notifications** - Fetch user's notifications with pagination
+
+### Analytics APIs (Admin)
+- **GET /analytics/restaurants** - Fetch restaurant performance metrics
+- **GET /analytics/orders** - Fetch order analytics
+
+### Cart Management APIs
+- **POST /users/{userId}/cart** - Add items to cart
+- **GET /users/{userId}/cart** - Fetch user's cart
+- **DELETE /users/{userId}/cart** - Clear user's cart
+
+### Payment APIs
+- **POST /orders/{orderId}/payment** - Process order payment
+- **GET /users/{userId}/payment-methods** - Fetch user's saved payment methods
+
+### Search and Recommendations APIs
+- **GET /search** - Search restaurants or dishes with location filter and pagination
+- **GET /users/{userId}/recommendations** - Fetch personalized recommendations
+
+## 4. Performance Requirements
+
+- Cache frequently accessed data (e.g., restaurant lists, menus) using Redis (optional)
+- Optimize SQL queries to avoid N+1 problems and use indexes
+- Use connection pooling for PostgreSQL (`pg.Pool`)
+- Support horizontal scaling with load balancers
+- Use Docker for containerized deployment
+
+## 5. Security Requirements
+
+- Use HTTPS
+- Sanitize inputs
+- Hash passwords using bcrypt
+- Secure user-specific and admin APIs with JWT or OAuth
+- Apply rate limiting to all APIs to prevent abuse
+- Use standard HTTP status codes with JSON error messages
+
+## 6. Testing Requirements
+
+- Unit tests for controller logic and service functions
+- Integration tests for API endpoints with mock PostgreSQL database
+- Aim for 80%+ code coverage using Jest
+- Mock external services (e.g., payment gateway) using `sinon`
+
+## 7. External Integrations
+
+- Payment gateway (e.g., Stripe) for payments
+- Push notification service (e.g., Firebase) for notifications
+- Mapping API (e.g., Google Maps) for delivery tracking and location-based search
+- Real-time support using WebSockets for delivery tracking and notifications
+
+## 8. API Documentation Requirements
+
+- Expose Swagger UI at `/docs` for interactive API documentation
+- Generated from OpenAPI specifications
+- Detailed description for each of the routes, methods, errors
+
+## 9. TypeScript Configuration Requirements
+
+- Use a `tsconfig.json` configuration that supports TypeScript without requiring `.js` extensions in imports
+- Ensure compatibility with Node.js and CommonJS modules, as `module` field is not used in `package.json`
+- Support for path mapping with `@/*` alias for `src/*` 
